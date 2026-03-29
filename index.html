@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hair Studio De Luxe — Where Beauty Feels Effortless</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+
+  <style>
+    :root {
+      --bg:        #fff9f6;
+      --fg:        #0b1020;
+      --primary:   #b85c3a;
+      --primary-l: #d2826a;
+      --secondary: #f6eee9;
+      --muted-fg:  #7a6a63;
+      --border:    rgba(11,16,32,.08);
+      --accent:    #d2b48c;
+      --white:     #ffffff;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+      --ease: cubic-bezier(.4,0,.2,1);
+      --section-pad: clamp(80px, 10vw, 160px);
+      --container: 1280px;
+      --gutter: clamp(20px, 5vw, 80px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--fg);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a   { text-decoration: none; color: inherit; }
+
+    .container {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      height: 76px;
+      z-index: 100;
+      transition: background .4s var(--ease), box-shadow .4s var(--ease);
+    }
+    .navbar.scrolled {
+      background: rgba(255,249,246,.95);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .nav-brand {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: .08em;
+      color: #fff;
+      transition: color .4s;
+      line-height: 1.1;
+    }
+    .nav-brand span {
+      display: block;
+      font-size: 10px;
+      font-family: var(--font-body);
+      font-weight: 300;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+    .navbar.scrolled .nav-brand      { color: var(--fg); }
+    .navbar.scrolled .nav-brand span { color: var(--primary); }
+
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .12em;
+      color: rgba(255,255,255,.85); transition: color .3s;
+    }
+    .nav-links a.active, .nav-links a:hover { color: var(--accent); }
+    .navbar.scrolled .nav-links a { color: var(--muted-fg); }
+    .navbar.scrolled .nav-links a:hover,
+    .navbar.scrolled .nav-links a.active { color: var(--primary); }
+
+    .nav-cta {
+      height: 42px; padding: 0 24px;
+      font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .12em;
+      background: #fff; color: var(--fg);
+      border: none; cursor: pointer;
+      transition: background .3s, color .3s;
+    }
+    .navbar.scrolled .nav-cta { background: var(--primary); color: #fff; }
+    .nav-cta:hover { opacity: .88; }
+
+    /* Special Offers pill */
+    .nav-offer {
+      height: 32px; padding: 0 16px;
+      font-size: 11px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .1em;
+      background: var(--primary); color: #fff;
+      border: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    .nav-toggle {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-toggle span {
+      display: block; width: 24px; height: 2px;
+      background: #fff; border-radius: 2px;
+      transition: background .4s, transform .4s;
+    }
+    .navbar.scrolled .nav-toggle span { background: var(--fg); }
+
+    .mobile-menu {
+      display: none; position: fixed;
+      top: 76px; left: 0; width: 100%;
+      background: rgba(255,249,246,.97);
+      backdrop-filter: blur(16px);
+      padding: 32px var(--gutter) 40px;
+      z-index: 99; border-top: 1px solid var(--border);
+      flex-direction: column; gap: 24px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 14px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .1em; color: var(--fg);
+    }
+    .mobile-menu .nav-cta {
+      background: var(--primary); color: #fff;
+      width: fit-content; margin-top: 8px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100svh; min-height: 680px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #4a2a1a 0%, #1a0d08 50%, #2d1510 100%);
+      z-index: 1;
+    }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+      opacity: .45;
+    }
+    .hero-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; z-index: 2; opacity: .55;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.28) 0%, rgba(0,0,0,.52) 100%);
+      z-index: 3;
+    }
+    .hero-content {
+      position: relative; z-index: 4;
+      color: #fff; max-width: 900px; padding: 0 24px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .25em;
+      color: var(--accent); margin-bottom: 28px;
+      opacity: 0; animation: fadeUp .9s .3s var(--ease) forwards;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(54px, 8vw, 110px);
+      font-weight: 300; letter-spacing: -.02em; line-height: 1.05;
+      margin-bottom: 32px;
+      opacity: 0; animation: fadeUp .9s .5s var(--ease) forwards;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-subtitle {
+      font-size: clamp(15px, 2vw, 20px);
+      color: rgba(255,255,255,.9); font-weight: 300;
+      line-height: 1.7; max-width: 600px; margin-bottom: 56px;
+      opacity: 0; animation: fadeUp .9s .7s var(--ease) forwards;
+    }
+    .hero-actions {
+      display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+      opacity: 0; animation: fadeUp .9s .9s var(--ease) forwards;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 40px; left: 50%;
+      transform: translateX(-50%); z-index: 4;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      color: rgba(255,255,255,.5);
+      font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+      opacity: 0; animation: fadeUp .9s 1.2s var(--ease) forwards;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent);
+    }
+
+    /* Buttons */
+    .btn {
+      height: 52px; padding: 0 32px;
+      font-family: var(--font-body); font-size: 14px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .05em;
+      display: inline-flex; align-items: center; gap: 10px;
+      cursor: pointer; border: none; transition: all .3s var(--ease);
+    }
+    .btn:hover { transform: translateY(-2px); opacity: .9; }
+    .btn-white  { background: #fff; color: var(--fg); }
+    .btn-glass  { background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.4); backdrop-filter: blur(12px); }
+    .btn-primary{ background: var(--primary); color: #fff; }
+    .btn-outline{ background: transparent; color: var(--fg); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ── PHILOSOPHY STRIP ── */
+    .philosophy-section { background: var(--secondary); padding: 120px 0; }
+    .philosophy-section .container { max-width: 1000px; text-align: center; }
+    .philosophy-text {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 300; line-height: 1.5;
+      color: var(--fg); margin-bottom: 40px; letter-spacing: -.01em;
+    }
+    .philosophy-author {
+      text-transform: uppercase; font-size: 13px;
+      letter-spacing: .15em; color: var(--muted-fg); font-weight: 500;
+    }
+
+    /* ── Section common ── */
+    .section { padding: var(--section-pad) 0; }
+    .section-header {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; margin-bottom: 80px;
+    }
+    .section-eyebrow {
+      font-size: 11px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .25em;
+      color: var(--primary); margin-bottom: 18px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 300; letter-spacing: -.03em;
+      margin-bottom: 24px; color: var(--fg);
+    }
+    .section-desc {
+      font-size: 18px; color: var(--muted-fg);
+      max-width: 600px; margin: 0 auto; font-weight: 300;
+    }
+
+    /* ── OUR STORY ── */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 8vw, 120px);
+      align-items: center;
+    }
+    .story-label {
+      font-size: 11px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .25em;
+      color: var(--primary); margin-bottom: 20px;
+    }
+    .story-heading {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 4vw, 52px);
+      font-weight: 300; letter-spacing: -.02em; line-height: 1.1; margin-bottom: 28px;
+    }
+    .story-body {
+      font-size: 16px; font-weight: 300;
+      line-height: 1.85; color: var(--muted-fg); margin-bottom: 28px;
+    }
+    .story-body strong { color: var(--fg); font-weight: 500; }
+    .story-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .12em;
+      color: var(--primary); transition: gap .3s;
+    }
+    .story-cta:hover { gap: 16px; }
+    .story-stats {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 24px; margin-top: 40px; padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 44px; font-weight: 300;
+      color: var(--primary); line-height: 1; margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .12em; color: var(--muted-fg);
+    }
+    .story-visuals { position: relative; padding-bottom: 40px; padding-right: 40px; }
+    .story-img-main { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+    .story-img-float {
+      position: absolute; bottom: 0; right: 0;
+      width: 55%; aspect-ratio: 1; object-fit: cover;
+      border: 6px solid var(--bg);
+      box-shadow: 0 20px 60px rgba(0,0,0,.14);
+    }
+    .story-badge {
+      position: absolute; top: 32px; left: -20px;
+      background: var(--fg); padding: 20px 24px;
+      text-align: center; box-shadow: 0 12px 40px rgba(0,0,0,.2);
+    }
+    .story-badge-num {
+      font-family: var(--font-display); font-size: 38px; font-weight: 300;
+      color: var(--accent); display: block; line-height: 1;
+    }
+    .story-badge-text {
+      font-size: 9px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .18em;
+      color: rgba(255,255,255,.5); margin-top: 6px; display: block;
+    }
+
+    /* ── WHAT WE OFFER ── */
+    .offer-section { background: var(--secondary); }
+    .offer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 8vw, 100px);
+      align-items: center;
+    }
+    .offer-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    .offer-list { display: flex; flex-direction: column; }
+    .offer-item {
+      display: flex; align-items: center; gap: 28px;
+      padding: 24px 0; border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: padding-left .3s var(--ease);
+    }
+    .offer-item:first-child { border-top: 1px solid var(--border); }
+    .offer-item:hover { padding-left: 8px; }
+    .offer-item:hover .offer-name { color: var(--primary); }
+    .offer-num {
+      font-family: var(--font-display); font-size: 36px; font-weight: 300;
+      color: rgba(184,92,58,.18); line-height: 1; flex-shrink: 0; width: 52px;
+    }
+    .offer-name {
+      font-family: var(--font-display); font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 400; transition: color .3s;
+    }
+
+    /* ── APPOINTMENT CALLOUT ── */
+    .appointment-strip {
+      background: var(--fg);
+      padding: 80px 0;
+      text-align: center;
+    }
+    .appointment-strip .section-eyebrow { color: var(--accent); margin-bottom: 16px; }
+    .appointment-strip h2 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 300; color: #fff;
+      letter-spacing: -.02em; margin-bottom: 16px;
+    }
+    .appointment-strip p {
+      font-size: 17px; font-weight: 300;
+      color: rgba(255,255,255,.65); margin-bottom: 40px;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section {
+      background: var(--bg);
+      padding: var(--section-pad) 0;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(32px, 5vw, 64px);
+    }
+    .testimonial-item {
+      display: flex; flex-direction: column;
+      padding: clamp(28px, 3vw, 44px);
+      background: var(--secondary);
+      border: 1px solid var(--border);
+    }
+    .stars { display: flex; gap: 6px; margin-bottom: 28px; }
+    .testimonial-text {
+      font-family: var(--font-display); font-size: clamp(17px, 2vw, 21px);
+      font-style: italic; font-weight: 300; line-height: 1.65;
+      color: var(--fg); margin-bottom: 32px; flex: 1;
+    }
+    .testimonial-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 20px; border-top: 1px solid var(--border); margin-top: auto;
+    }
+    .testimonial-author {
+      font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .1em; color: var(--fg);
+    }
+    .testimonial-location {
+      font-size: 13px; color: var(--muted-fg); font-weight: 300;
+    }
+
+    /* ── YOUTUBE VIDEO SECTION ── */
+    .video-section { background: var(--secondary); padding: var(--section-pad) 0; }
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+      overflow: hidden;
+      background: var(--fg);
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+    /* Decorative frame around video */
+    .video-frame {
+      position: relative;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .video-frame::before {
+      content: '';
+      position: absolute;
+      top: -12px; left: -12px;
+      right: 12px; bottom: 12px;
+      border: 1px solid var(--accent);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .video-frame .video-wrapper { position: relative; z-index: 1; }
+
+    /* ── CTA DARK ── */
+    .cta-section {
+      background: var(--fg); color: #fff;
+      padding: var(--section-pad) 0; text-align: center;
+    }
+    .cta-section .section-title  { color: #fff; }
+    .cta-section .section-eyebrow{ color: var(--accent); }
+    .cta-section .section-desc   { color: rgba(255,255,255,.7); margin-bottom: 52px; }
+    .cta-actions { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--fg); color: var(--bg);
+      padding: 120px 0 40px;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.5fr 1fr;
+      gap: 64px; margin-bottom: 120px;
+    }
+    .footer-brand {
+      font-family: var(--font-display); font-size: 26px;
+      font-weight: 300; letter-spacing: .05em;
+      margin-bottom: 6px; display: block;
+    }
+    .footer-brand-sub {
+      font-size: 10px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .2em;
+      color: var(--accent); display: block; margin-bottom: 24px;
+    }
+    .footer-desc {
+      font-size: 15px; color: rgba(255,255,255,.6);
+      max-width: 360px; line-height: 1.7;
+      font-weight: 300; margin-bottom: 40px;
+    }
+    .footer-heading {
+      font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .1em;
+      margin-bottom: 32px; color: #fff;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 20px; }
+    .footer-link {
+      font-size: 15px; color: rgba(255,255,255,.6);
+      font-weight: 300; cursor: pointer; transition: color .3s;
+    }
+    .footer-link:hover { color: var(--accent); }
+    .social-links { display: flex; gap: 24px; }
+    .social-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; cursor: pointer; transition: border-color .3s, color .3s;
+    }
+    .social-icon:hover { border-color: var(--accent); color: var(--accent); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 40px; border-top: 1px solid rgba(255,255,255,.1);
+      font-size: 13px; color: rgba(255,255,255,.5);
+      font-weight: 300; letter-spacing: .02em; flex-wrap: wrap; gap: 12px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .footer-grid  { grid-template-columns: 1fr 1fr; }
+      .story-grid   { grid-template-columns: 1fr; }
+      .story-visuals{ display: none; }
+      .offer-grid   { grid-template-columns: 1fr; }
+      .offer-img    { aspect-ratio: 16/9; max-height: 420px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta, .nav-offer { display: none; }
+      .nav-toggle { display: flex; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .story-stats { grid-template-columns: 1fr 1fr; }
+      .hero-scroll { display: none; }
+      .video-frame::before { display: none; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid  { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; width: 100%; }
+      .btn          { justify-content: center; }
+      .cta-actions  { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <a href="/" class="nav-brand">
+        Hair Studio De Luxe
+        <span>Kerala's Premium Salon</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/" class="active">Home</a></li>
+          <li><a href="about-us.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="/contact-us/">Contact</a></li>
+        </ul>
+      </nav>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="/special-offers/" class="nav-offer">
+          <iconify-icon icon="lucide:tag" style="font-size:13px"></iconify-icon>
+          Special Offers
+        </a>
+        <button class="nav-cta" onclick="location.href='/contact-us/'">Book Appointment</button>
+      </div>
+      <button class="nav-toggle" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/" onclick="closeMobile()">Home</a>
+    <a href="/about-us/" onclick="closeMobile()">About Us</a>
+    <a href="/services/" onclick="closeMobile()">Services</a>
+    <a href="/gallery/" onclick="closeMobile()">Gallery</a>
+    <a href="/contact-us/" onclick="closeMobile()">Contact</a>
+    <a href="/special-offers/" onclick="closeMobile()">Special Offers</a>
+    <button class="btn nav-cta" onclick="closeMobile();location.href='/contact-us/'">Book Appointment</button>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <img class="hero-img"
+      src="https://hairstudiodeluxe.com/wp-content/uploads/2025/11/DSC3318-scaled.jpg"
+      alt="Hair Studio De Luxe"
+      onerror="this.style.opacity='0'" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Welcome to Hair Studio De Luxe</p>
+      <h1>Where Beauty<br>Feels <em>Effortless</em></h1>
+      <p class="hero-subtitle">
+        Discover everything beauty can be with one of the Best Salons in Kerala.
+      </p>
+      <div class="hero-actions">
+        <a href="/contact-us/" class="btn btn-white">
+          <iconify-icon icon="lucide:calendar"></iconify-icon>
+          Book Appointment
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ── OUR STORY ── -->
+  <section class="section">
+    <div class="container">
+      <div class="story-grid">
+        <div class="reveal">
+          <p class="story-label">Our Story</p>
+          <h2 class="story-heading">Crafting Beauty<br>Since 2018</h2>
+          <p class="story-body">
+            Since 2018, we've focused on one thing — providing genuine, high-quality salon care that feels personal, comfortable and refined. We combine <strong>expert hands</strong> with <strong>premium products</strong> to ensure safe, beautiful and lasting results.
+          </p>
+          <a href="/about-us/" class="story-cta">
+            More About Us <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+          </a>
+          <div class="story-stats">
+            <div>
+              <div class="stat-num">2018</div>
+              <div class="stat-label">Est. Thrissur</div>
+            </div>
+            <div>
+              <div class="stat-num">100+</div>
+              <div class="stat-label">Professionals</div>
+            </div>
+            <div>
+              <div class="stat-num">4+</div>
+              <div class="stat-label">Branches</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-visuals reveal" style="transition-delay:.2s">
+          <img class="story-img-main"
+            src="https://hairstudiodeluxe.com/wp-content/uploads/2025/11/DSC1747-240x300.jpg"
+            alt="Hair Studio De Luxe"
+            onerror="this.src='https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80'" />
+          <img class="story-img-float"
+            src="https://hairstudiodeluxe.com/wp-content/uploads/2025/11/DSC8004-scaled.jpg"
+            alt="Salon"
+            onerror="this.src='https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80'" />
+          <div class="story-badge">
+            <span class="story-badge-num">7+</span>
+            <span class="story-badge-text">Years of Excellence</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHAT WE OFFER ── -->
+  <section class="section offer-section">
+    <div class="container">
+      <div class="offer-grid">
+        <img class="offer-img"
+          src="https://hairstudiodeluxe.com/wp-content/uploads/2025/11/DSC3318-scaled.jpg"
+          alt="What We Offer"
+          onerror="this.style.background='var(--bg)';this.style.minHeight='400px'" />
+
+        <div class="reveal">
+          <p class="section-eyebrow" style="text-align:left">What We Offer</p>
+          <h2 class="section-title" style="text-align:left;margin-bottom:16px">
+            From Everyday Grooming<br>to Advanced Treatments
+          </h2>
+          <p class="section-desc" style="text-align:left;margin:0 0 44px">
+            Customized for your needs.
+          </p>
+          <div class="offer-list">
+            <div class="offer-item">
+              <div class="offer-num">01</div>
+              <span class="offer-name">Hair Cuts &amp; Styling</span>
+            </div>
+            <div class="offer-item">
+              <div class="offer-num">02</div>
+              <span class="offer-name">Hair Colouring</span>
+            </div>
+            <div class="offer-item">
+              <div class="offer-num">03</div>
+              <span class="offer-name">Keratin / Botox / Smoothening</span>
+            </div>
+          </div>
+          <div style="margin-top:36px">
+            <a href="/services/" class="story-cta">
+              More Services <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── APPOINTMENT STRIP ── -->
+  <section class="appointment-strip">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-eyebrow">Appointment</p>
+        <h2>Want to make a booking or have a question?</h2>
+        <p>Call us or simply book an appointment</p>
+        <a href="/contact-us/" class="btn btn-white">
+          <iconify-icon icon="lucide:calendar"></iconify-icon>
+          Click Here
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">Client Reviews</p>
+        <h2 class="section-title">Our Happy Clients!</h2>
+        <p class="section-desc">
+          Don't just take our word for it — here's what our clients have to say.
+        </p>
+      </div>
+      <div class="testimonials-grid">
+
+        <div class="testimonial-item reveal">
+          <div class="stars">
+            <iconify-icon icon="lucide:star" style="font-size:17px;fill:#d2b48c;color:#d2b48c"></iconify-icon>
+            <iconify-icon icon="lucide:star" style="font-size:17px;fill:#d2b48c;color:#d2b48c"></iconify-icon>
+            <iconify-icon icon="lucide:star" style="font-size:17px;fill:#d2b48c;color:#d2b48c"></iconify-icon>
+            <iconify-icon icon="lucide:star" style="font-size:17px;fill:#d2b48c;color:#d2b48c"></iconify-icon>
+            <iconify-icon icon="lucide:star" style="font-size:17px;fill:#d2b48c;color:#d2b48c"></iconify-icon>
+          </div>
+          <p class="testimonial-text">
+            "I had a great experience at this salon. Meer and Navas provided excellent service — attentive, professional, and ensured I was comfortable throughout. The salon was clean and had a pleasant ambiance. Overall, a satisfying and refreshing experience. Highly recommend!"
+          </p>
+          <div class="testimonial-footer">
+            <span class="testimonial-author">Aryadevi PR</span>
+            <span class="testimonial-location">Edappal · Rated 5/5</span>
+          </div>
+        </div>
+
+        <div class="testimonial-item reveal" style="transition-delay:.15s">
+          <div class="stars">
+            <iconify-icon icon="lucide:star" style="font-size:17px;fill:#d2b48c;color:#d2b48c"></iconify-icon>
+            <iconify-icon icon="lucide:star" style="font-size:17px;fill:#d2b48c;color:#d2b48c"></iconify-icon>
+            <iconify-icon icon="lucide:star" style="font-size:17px;fill:#d2b48c;color:#d2b48c"></iconify-icon>
+            <iconify-icon icon="lucide:star" style="font-size:17px;fill:#d2b48c;color:#d2b48c"></iconify-icon>
+            <iconify-icon icon="lucide:star" style="font-size:17px;fill:#d2b48c;color:#d2b48c"></iconify-icon>
+          </div>
+          <p class="testimonial-text">
+            "I got the Shine Bond treatment from Hair Studio, and stylist Arif was incredibly helpful throughout the process, offering great guidance. I'm really pleased with the results — my hair looks healthier and more vibrant. Big thanks for the excellent service!"
+          </p>
+          <div class="testimonial-footer">
+            <span class="testimonial-author">Chinju Boban</span>
+            <span class="testimonial-location">Thrissur · Rated 5/5</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── YOUTUBE VIDEO ── -->
+  <section class="video-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">Watch Us in Action</p>
+        <h2 class="section-title">See the Experience</h2>
+        <p class="section-desc">
+          Get a glimpse of our salon, our team, and the transformations we create every day.
+        </p>
+      </div>
+      <div class="video-frame reveal">
+        <div class="video-wrapper">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/dNuDP4PWr4Y?si=wRZafa7YntFNnaTm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- Channel link -->
+      <div style="text-align:center;margin-top:40px" class="reveal">
+        <a href="https://www.youtube.com/@Hairstudiodeluxe"
+           target="_blank"
+           class="story-cta" style="justify-content:center;gap:10px;font-size:13px;">
+          <iconify-icon icon="lucide:youtube" style="font-size:18px;color:var(--primary)"></iconify-icon>
+          Visit Our YouTube Channel
+          <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-eyebrow">Ready for a New Look?</p>
+        <h2 class="section-title">Book Your Appointment Today</h2>
+        <p class="section-desc">
+          Transform your hair with expert stylists, premium care and a relaxing luxury environment, available at all our Kerala branches.
+        </p>
+        <div class="cta-actions">
+          <a href="/contact-us/" class="btn btn-white">
+            <iconify-icon icon="lucide:calendar"></iconify-icon>
+            Make an Appointment
+          </a>
+          <a href="/special-offers/" class="btn btn-glass">
+            <iconify-icon icon="lucide:tag"></iconify-icon>
+            Special Offers
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <span class="footer-brand">Hair Studio De Luxe</span>
+          <span class="footer-brand-sub">Premium Haircare Experience</span>
+          <p class="footer-desc">
+            Hair Studio De Luxe is a premium salon chain offering professional hair & beauty services across Kerala. Quality-driven, client-focused and trend-aware.
+          </p>
+          <div class="social-links">
+            <a href="https://www.instagram.com/hairstudio_deluxe/" target="_blank" class="social-icon">
+              <iconify-icon icon="lucide:instagram" style="font-size:20px"></iconify-icon>
+            </a>
+            <a href="#" class="social-icon">
+              <iconify-icon icon="lucide:facebook" style="font-size:20px"></iconify-icon>
+            </a>
+            <a href="https://www.youtube.com/@Hairstudiodeluxe" target="_blank" class="social-icon">
+              <iconify-icon icon="lucide:youtube" style="font-size:20px"></iconify-icon>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-heading">Popular Services</h4>
+          <div class="footer-links">
+            <span class="footer-link">Haircut &amp; Styling</span>
+            <span class="footer-link">Hair Spa &amp; Treatment</span>
+            <span class="footer-link">Hair Coloring &amp; Highlights</span>
+            <span class="footer-link">Scalp &amp; Dandruff Care</span>
+            <span class="footer-link">Facials</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-heading">Useful Links</h4>
+          <div class="footer-links">
+            <a href="/" class="footer-link">Home</a>
+            <a href="/about-us/" class="footer-link">About</a>
+            <a href="/services/" class="footer-link">Services</a>
+            <a href="/gallery/" class="footer-link">Gallery</a>
+            <a href="/contact-us/" class="footer-link">Contact</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-links">
+            <span class="footer-link">Thrissur, Edappal, Pattambi, Kakkattil</span>
+            <span class="footer-link">hairstudiotcr@gmail.com</span>
+            <span class="footer-link">+91 85899 71111</span>
+            <span class="footer-link">+91 90720 33320</span>
+            <span class="footer-link">+91 99466 00955</span>
+            <span class="footer-link">+91 99466 05600</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Hair Studio De Luxe. All Rights Reserved.</span>
+        <span>Thrissur · Edappal · Pattambi · Kakkattil</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* Navbar */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    /* Mobile menu */
+    const toggle = document.getElementById('navToggle');
+    const menu   = document.getElementById('mobileMenu');
+    toggle.addEventListener('click', () => menu.classList.toggle('open'));
+    function closeMobile() { menu.classList.remove('open'); }
+
+    /* Scroll reveal */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
