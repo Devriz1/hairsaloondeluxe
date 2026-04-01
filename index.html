@@ -517,6 +517,17 @@
       font-size: 13px; color: rgba(255,255,255,.5);
       font-weight: 300; letter-spacing: .02em; flex-wrap: wrap; gap: 12px;
     }
+    .logo {
+  height: 43px;
+  width: auto;
+  object-fit: contain;
+  transition: opacity .3s ease;
+}
+
+/* When navbar scrolls */
+.navbar.scrolled .logo {
+  height: 45px;
+}
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -555,16 +566,15 @@
   <header class="navbar" id="navbar">
     <div class="container">
       <a href="/" class="nav-brand">
-        Hair Studio De Luxe
-        <span>Kerala's Premium Salon</span>
-      </a>
+  <img src="Assets\Untitled design (2).png" alt="Hair Studio De Luxe Logo" class="logo" id="siteLogo">
+</a>
       <nav>
         <ul class="nav-links">
-          <li><a href="/" class="active">Home</a></li>
+          <li><a href="index.html" class="active">Home</a></li>
           <li><a href="about-us.html">About Us</a></li>
           <li><a href="services.html">Services</a></li>
           <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="/contact-us/">Contact</a></li>
+          <li><a href="contact-us.html">Contact</a></li>
         </ul>
       </nav>
       <div style="display:flex;align-items:center;gap:12px;">
@@ -583,11 +593,11 @@
   <!-- Mobile menu -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="/" onclick="closeMobile()">Home</a>
-    <a href="/about-us/" onclick="closeMobile()">About Us</a>
-    <a href="/services/" onclick="closeMobile()">Services</a>
-    <a href="/gallery/" onclick="closeMobile()">Gallery</a>
-    <a href="/contact-us/" onclick="closeMobile()">Contact</a>
-    <a href="/special-offers/" onclick="closeMobile()">Special Offers</a>
+    <a href="about-us.html" onclick="closeMobile()">About Us</a>
+    <a href="services.html" onclick="closeMobile()">Services</a>
+    <a href="gallery.html" onclick="closeMobile()">Gallery</a>
+    <a href="contact-us.html" onclick="closeMobile()">Contact</a>
+    <a href="special-offers.html" onclick="closeMobile()">Special Offers</a>
     <button class="btn nav-cta" onclick="closeMobile();location.href='/contact-us/'">Book Appointment</button>
   </div>
 
@@ -885,26 +895,39 @@
   </footer>
 
   <script>
-    /* Navbar */
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
+  /* Navbar */
+  const navbar = document.getElementById('navbar');
+  const logo = document.getElementById('siteLogo');
 
-    /* Mobile menu */
-    const toggle = document.getElementById('navToggle');
-    const menu   = document.getElementById('mobileMenu');
-    toggle.addEventListener('click', () => menu.classList.toggle('open'));
-    function closeMobile() { menu.classList.remove('open'); }
+  window.addEventListener('scroll', () => {
+    const isScrolled = window.scrollY > 60;
 
-    /* Scroll reveal */
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  </script>
+    navbar.classList.toggle('scrolled', isScrolled);
 
+    // Change logo image
+    logo.src = isScrolled 
+      ? "Assets/WhatsApp_Image_2025-11-05_at_23.18.16hgcf-removebg-preview-1.webp" 
+      : "Assets/Untitled design (2).png";
+
+  }, { passive: true });
+
+  /* Mobile menu */
+  const toggle = document.getElementById('navToggle');
+  const menu   = document.getElementById('mobileMenu');
+  toggle.addEventListener('click', () => menu.classList.toggle('open'));
+  function closeMobile() { menu.classList.remove('open'); }
+
+  /* Scroll reveal */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { 
+        e.target.classList.add('visible'); 
+        observer.unobserve(e.target); 
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
