@@ -517,8 +517,8 @@
       font-size: 13px; color: rgba(255,255,255,.5);
       font-weight: 300; letter-spacing: .02em; flex-wrap: wrap; gap: 12px;
     }
-    .logo {
-  height: 43px;
+.logo {
+  height: 45px;
   width: auto;
   object-fit: contain;
   transition: opacity .3s ease;
@@ -582,7 +582,7 @@
           <iconify-icon icon="lucide:tag" style="font-size:13px"></iconify-icon>
           Special Offers
         </a>
-        <button class="nav-cta" onclick="location.href='/contact-us/'">Book Appointment</button>
+        <button class="nav-cta" onclick="location.href='/contact-us.html#booking-form'">Book Appointment</button>
       </div>
       <button class="nav-toggle" id="navToggle">
         <span></span><span></span><span></span>
@@ -598,7 +598,7 @@
     <a href="gallery.html" onclick="closeMobile()">Gallery</a>
     <a href="contact-us.html" onclick="closeMobile()">Contact</a>
     <a href="special-offers.html" onclick="closeMobile()">Special Offers</a>
-    <button class="btn nav-cta" onclick="closeMobile();location.href='/contact-us/'">Book Appointment</button>
+    <button class="nav-cta" onclick="closeMobile(); location.href='contact-us.html#booking-form';">Book Appointment</button>
   </div>
 
   <!-- ── HERO ── -->
@@ -616,7 +616,7 @@
         Discover everything beauty can be with one of the Best Salons in Kerala.
       </p>
       <div class="hero-actions">
-        <a href="/contact-us/" class="btn btn-white">
+        <a href='/contact-us.html#formWrapper' class="btn btn-white">
           <iconify-icon icon="lucide:calendar"></iconify-icon>
           Book Appointment
         </a>
@@ -928,6 +928,15 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  function closeMobile() {
+  const menu = document.getElementById('mobileMenu');
+  
+  // Option A: If you are toggling a class (Recommended)
+  menu.classList.remove('active'); 
+  
+  // Option B: If you are changing the style directly
+  // menu.style.display = 'none'; 
+}
 </script>
 </body>
 </html>
