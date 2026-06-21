@@ -957,155 +957,153 @@
 
   <!-- ── BOOKING FORM ── -->
   <section class="section form-section" id="booking-form">
-    <div class="container">
-      <div class="form-grid">
+  <div class="container">
+    <div class="form-grid">
 
-        <div class="reveal">
-          <p class="form-left-eyebrow">Make an Appointment</p>
-          <h2 class="form-left-title">Reserve Your<br>Spot Today</h2>
-          <p class="form-left-desc">
-            Ready for your next hair day? Fill in the form and our team will confirm your appointment at your preferred branch.
-          </p>
-          <div class="book-reasons">
-            <div class="book-reason">
-              <iconify-icon icon="lucide:check-circle"></iconify-icon>
-              Expert stylists trained in the latest techniques
-            </div>
-            <div class="book-reason">
-              <iconify-icon icon="lucide:check-circle"></iconify-icon>
-              Premium Kanpeki &amp; L'Oréal products
-            </div>
-            <div class="book-reason">
-              <iconify-icon icon="lucide:check-circle"></iconify-icon>
-              Relaxing, luxurious salon environment
-            </div>
-            <div class="book-reason">
-              <iconify-icon icon="lucide:check-circle"></iconify-icon>
-              Open 7 days — Sunday to Saturday
-            </div>
-            <div class="book-reason">
-              <iconify-icon icon="lucide:check-circle"></iconify-icon>
-              Walk-ins welcome, appointments preferred
-            </div>
+      <div class="reveal">
+        <p class="form-left-eyebrow">Make an Appointment</p>
+        <h2 class="form-left-title">Reserve Your<br>Spot Today</h2>
+        <p class="form-left-desc">
+          Ready for your next hair day? Fill in the form and our team will confirm your appointment at your preferred branch.
+        </p>
+        <div class="book-reasons">
+          <div class="book-reason">
+            <iconify-icon icon="lucide:check-circle"></iconify-icon>
+            Expert stylists trained in the latest techniques
+          </div>
+          <div class="book-reason">
+            <iconify-icon icon="lucide:check-circle"></iconify-icon>
+            Premium Kanpeki &amp; L'Oréal products
+          </div>
+          <div class="book-reason">
+            <iconify-icon icon="lucide:check-circle"></iconify-icon>
+            Relaxing, luxurious salon environment
+          </div>
+          <div class="book-reason">
+            <iconify-icon icon="lucide:check-circle"></iconify-icon>
+            Open 7 days — Sunday to Saturday
+          </div>
+          <div class="book-reason">
+            <iconify-icon icon="lucide:check-circle"></iconify-icon>
+            Walk-ins welcome, appointments preferred
           </div>
         </div>
-
-        <div class="reveal" style="transition-delay:.15s">
-          <div class="booking-form" id="formWrapper">
-            <h3 class="form-title">Book Your Visit</h3>
-            <form id="appointmentForm" onsubmit="handleSubmit(event)">
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Name <span class="required">*</span></label>
-                  <input class="form-input" type="text" placeholder="Your full name" required />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Phone Number <span class="required">*</span></label>
-                  <input class="form-input" type="tel" placeholder="+91 00000 00000" required />
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Select Branch <span class="required">*</span></label>
-                  <select class="form-select" id="branchSelect" required>
-                    <option value="" disabled selected>Choose a branch…</option>
-                    <option value="thrissur">Thrissur — Keerankulangara</option>
-                    <option value="edappal">Edappal — Pattambi Rd</option>
-                    <option value="pattambi">Pattambi — Garuda Mall</option>
-                    <option value="kakkattil">Kakkattil — K Mall</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Choose Service <span class="required">*</span></label>
-                  <select class="form-select" required>
-                    <option value="" disabled selected>Select a service…</option>
-                    <optgroup label="Hair Care">
-                      <option>Haircut &amp; Styling</option>
-                      <option>Hair Colouring &amp; Highlights</option>
-                      <option>Keratin / Botox / Smoothening</option>
-                      <option>Hair Spa &amp; Treatment</option>
-                      <option>Scalp &amp; Dandruff Care</option>
-                      <option>Cysteine Complex Treatment</option>
-                      <option>Shine Bond Treatment</option>
-                    </optgroup>
-                    <optgroup label="Skin Care">
-                      <option>Facials</option>
-                      <option>Skin Treatment</option>
-                    </optgroup>
-                    <optgroup label="Other">
-                      <option>Hand &amp; Foot Care</option>
-                      <option>Waxing</option>
-                    </optgroup>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Date <span class="required">*</span></label>
-                  <input class="form-input" type="date" required
-                    min="" id="dateInput" />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Time <span class="required">*</span></label>
-                  <select class="form-select" required>
-                    <option value="" disabled selected>— Please choose an option —</option>
-                    <option>10:00 AM</option>
-                    <option>10:30 AM</option>
-                    <option>11:00 AM</option>
-                    <option>11:30 AM</option>
-                    <option>12:00 PM</option>
-                    <option>12:30 PM</option>
-                    <option>1:00 PM</option>
-                    <option>1:30 PM</option>
-                    <option>2:00 PM</option>
-                    <option>2:30 PM</option>
-                    <option>3:00 PM</option>
-                    <option>3:30 PM</option>
-                    <option>4:00 PM</option>
-                    <option>4:30 PM</option>
-                    <option>5:00 PM</option>
-                    <option>5:30 PM</option>
-                    <option>6:00 PM</option>
-                    <option>6:30 PM</option>
-                    <option>7:00 PM</option>
-                    <option>7:30 PM</option>
-                    <option>8:00 PM</option>
-                    <option>9:00 PM</option>
-                    <option>9:30 PM</option>
-                    <option>10:00 PM</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Notes (Optional)</label>
-                <textarea class="form-textarea" placeholder="Any special requests or details we should know?"></textarea>
-              </div>
-
-              <button type="submit" class="form-submit">
-                <iconify-icon icon="lucide:calendar-check" style="font-size:18px"></iconify-icon>
-                Confirm Appointment
-              </button>
-              <p class="form-note">We'll get back to you within 24 hours to confirm.</p>
-            </form>
-
-            <!-- Success message -->
-            <div class="form-success" id="formSuccess">
-              <div class="form-success-icon">
-                <iconify-icon icon="lucide:check" style="font-size:28px"></iconify-icon>
-              </div>
-              <h3>Appointment Requested!</h3>
-              <p>Thank you! Our team will contact you shortly to confirm your booking.</p>
-            </div>
-          </div>
-        </div>
-
       </div>
+
+      <div class="reveal" style="transition-delay:.15s">
+        <div class="booking-form" id="formWrapper">
+          <h3 class="form-title">Book Your Visit</h3>
+          <form id="appointmentForm" onsubmit="handleSubmit(event)">
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Name <span class="required">*</span></label>
+                <input class="form-input" id="name" type="text" placeholder="Your full name" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone Number <span class="required">*</span></label>
+                <input class="form-input" id="phone" type="tel" placeholder="+91 00000 00000" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Select Branch <span class="required">*</span></label>
+                <select class="form-select" id="branchSelect" required>
+                  <option value="" disabled selected>Choose a branch…</option>
+                  <option value="thrissur">Thrissur — Keerankulangara</option>
+                  <option value="edappal">Edappal — Pattambi Rd</option>
+                  <option value="pattambi">Pattambi — Garuda Mall</option>
+                  <option value="kakkattil">Kakkattil — K Mall</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Choose Service <span class="required">*</span></label>
+                <select class="form-select" id="serviceSelect" required>
+                  <option value="" disabled selected>Select a service…</option>
+                  <optgroup label="Hair Care">
+                    <option>Haircut &amp; Styling</option>
+                    <option>Hair Colouring &amp; Highlights</option>
+                    <option>Keratin / Botox / Smoothening</option>
+                    <option>Hair Spa &amp; Treatment</option>
+                    <option>Scalp &amp; Dandruff Care</option>
+                    <option>Cysteine Complex Treatment</option>
+                    <option>Shine Bond Treatment</option>
+                  </optgroup>
+                  <optgroup label="Skin Care">
+                    <option>Facials</option>
+                    <option>Skin Treatment</option>
+                  </optgroup>
+                  <optgroup label="Other">
+                    <option>Hand &amp; Foot Care</option>
+                    <option>Waxing</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Date <span class="required">*</span></label>
+                <input class="form-input" type="date" required min="" id="dateInput" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Time <span class="required">*</span></label>
+                <select class="form-select" id="timeSelect" required>
+                  <option value="" disabled selected>— Please choose an option —</option>
+                  <option>10:00 AM</option>
+                  <option>10:30 AM</option>
+                  <option>11:00 AM</option>
+                  <option>11:30 AM</option>
+                  <option>12:00 PM</option>
+                  <option>12:30 PM</option>
+                  <option>1:00 PM</option>
+                  <option>1:30 PM</option>
+                  <option>2:00 PM</option>
+                  <option>2:30 PM</option>
+                  <option>3:00 PM</option>
+                  <option>3:30 PM</option>
+                  <option>4:00 PM</option>
+                  <option>4:30 PM</option>
+                  <option>5:00 PM</option>
+                  <option>5:30 PM</option>
+                  <option>6:00 PM</option>
+                  <option>6:30 PM</option>
+                  <option>7:00 PM</option>
+                  <option>7:30 PM</option>
+                  <option>8:00 PM</option>
+                  <option>9:00 PM</option>
+                  <option>9:30 PM</option>
+                  <option>10:00 PM</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Notes (Optional)</label>
+              <textarea class="form-textarea" id="notesInput" placeholder="Any special requests or details we should know?"></textarea>
+            </div>
+
+            <button type="submit" class="form-submit">
+              <iconify-icon icon="lucide:calendar-check" style="font-size:18px"></iconify-icon>
+              Confirm Appointment
+            </button>
+            <p class="form-note">We'll get back to you within 24 hours to confirm.</p>
+          </form>
+
+          <div class="form-success" id="formSuccess" style="display: none;">
+            <div class="form-success-icon">
+              <iconify-icon icon="lucide:check" style="font-size:28px"></iconify-icon>
+            </div>
+            <h3>Appointment Requested!</h3>
+            <p>Thank you! Our team will contact you shortly to confirm your booking.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ── CTA ── -->
   <section class="cta-section">
@@ -1258,44 +1256,51 @@
       dateInput.value = today;
     }
 
-    /* ── Form submit ── */
+    /* ── Form submit to WhatsApp ── */
     function handleSubmit(e) {
+      // 1. Prevent the page from reloading
       e.preventDefault();
-      const form    = document.getElementById('appointmentForm');
+      
+      // 2. Safely capture the form values based on your HTML structure
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const branchElement = document.getElementById('branchSelect');
+      const branchText = branchElement.options[branchElement.selectedIndex].text;
+      const service = document.getElementById('serviceSelect').value;
+      const date = document.getElementById('dateInput').value;
+      const time = document.getElementById('timeSelect').value;
+      const notes = document.getElementById('notesInput').value || "None";
+
+      // 3. Your Target Phone Number (Kerala/India Branch)
+      const phoneNumber = "919544256456"; 
+
+      // 4. Format a clean message with clear bold blocks
+      const textMessage = `*New Appointment Request*\n` +
+                          `-----------------------------\n` +
+                          `• *Name:* ${name}\n` +
+                          `• *Phone:* ${phone}\n` +
+                          `• *Branch:* ${branchText}\n` +
+                          `• *Service:* ${service}\n` +
+                          `• *Date:* ${date}\n` +
+                          `• *Time:* ${time}\n` +
+                          `• *Notes:* ${notes}`;
+
+      // 5. URL encode the string to prevent spacing breakage
+      const encodedMessage = encodeURIComponent(textMessage);
+
+      // 6. Build final URL string using the modern wa.me domain
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+      // 7. Update UI to present the success block smoothly
+      const form = document.getElementById('appointmentForm');
       const success = document.getElementById('formSuccess');
-      form.style.display = 'none';
-      success.style.display = 'block';
+      if (form) form.style.display = 'none';
+      if (success) success.style.display = 'block';
+
+      // 8. FORWARD DIRECTLY: Changes the current tab to open WhatsApp instantly. 
+      // This completely bypasses all mobile popup blockers.
+      window.location.href = whatsappUrl;
     }
-    document.getElementById('form-submit').addEventListener('submit', function(event) {
-  // 1. Prevent the form from refreshing the page
-  event.preventDefault();
-
-  // 2. Grab the values from the form inputs
-  const name = document.getElementById('userName').value;
-  const service = document.getElementById('service').value;
-  const date = document.getElementById('date').value;
-
-  // 3. Set your phone number (Include country code, but NO spaces, plus signs, or dashes)
-  // Example: 15551234567 (1 is US country code)
-  const phoneNumber = "919544256456"; 
-
-  // 4. Format your message nicely 
-  // Use \n to create line breaks in your text
-  const textMessage = `Hello, I would like to book an appointment!\n\n` +
-                      `*Name:* ${name}\n` +
-                      `*Service:* ${service}\n` +
-                      `*Date:* ${date}`;
-
-  // 5. Encode the message so it's safe for a URL
-  const encodedMessage = encodeURIComponent(textMessage);
-
-  // 6. Build the final WhatsApp API link
-  const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
-
-  // 7. Redirect the user! 
-  // _blank opens it in a new tab so they don't lose your website
-  window.open(whatsappUrl, '_blank');
-});
 </script>
 
 </body>

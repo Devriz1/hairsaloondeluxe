@@ -74,27 +74,40 @@
       justify-content: space-between;
       height: 100%;
     }
+    
+    /* Dynamic Logo Container */
     .nav-brand {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 400;
-      letter-spacing: .08em;
-      color: #fff;
-      transition: color .4s;
-      line-height: 1.1;
+      display: inline-block;
+      position: relative;
+      height: 45px;
+      min-width: 160px; /* Reserves layout width to prevent links from shifting */
     }
-    .nav-brand span {
-      display: block;
-      font-size: 10px;
-      font-family: var(--font-body);
-      font-weight: 300;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-top: 2px;
+
+    .logo {
+      height: 45px;
+      width: auto;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity .3s ease, visibility .3s ease;
     }
-    .navbar.scrolled .nav-brand      { color: var(--fg); }
-    .navbar.scrolled .nav-brand span { color: var(--primary); }
+
+    /* Initially hide the dark scroll logo */
+    .logo-scrolled {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* Toggle visibility on scroll without affecting layout geometry */
+    .navbar.scrolled .logo-default {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .navbar.scrolled .logo-scrolled {
+      opacity: 1;
+      visibility: visible;
+    }
 
     .nav-links { display: flex; gap: 40px; list-style: none; }
     .nav-links a {
@@ -517,17 +530,6 @@
       font-size: 13px; color: rgba(255,255,255,.5);
       font-weight: 300; letter-spacing: .02em; flex-wrap: wrap; gap: 12px;
     }
-.logo {
-  height: 45px;
-  width: auto;
-  object-fit: contain;
-  transition: opacity .3s ease;
-}
-
-/* When navbar scrolls */
-.navbar.scrolled .logo {
-  height: 45px;
-}
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -562,12 +564,12 @@
 
 <body>
 
-  <!-- ── NAVBAR ── -->
   <header class="navbar" id="navbar">
     <div class="container">
       <a href="/" class="nav-brand">
-  <img src="Assets\Untitled design (2).png" alt="Hair Studio De Luxe Logo" class="logo" id="siteLogo">
-</a>
+        <img src="Assets/Untitled design (2).png" alt="Hair Studio De Luxe Logo" class="logo logo-default" id="siteLogo">
+        <img src="Assets/WhatsApp_Image_2025-11-05_at_23.18.16hgcf-removebg-preview-1.webp" alt="Hair Studio De Luxe Logo" class="logo logo-scrolled">
+      </a>
       <nav>
         <ul class="nav-links">
           <li><a href="index.html" class="active">Home</a></li>
@@ -590,7 +592,6 @@
     </div>
   </header>
 
-  <!-- Mobile menu -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="/" onclick="closeMobile()">Home</a>
     <a href="about-us.html" onclick="closeMobile()">About Us</a>
@@ -601,7 +602,6 @@
     <button class="nav-cta" onclick="closeMobile(); location.href='contact-us.html#booking-form';">Book Appointment</button>
   </div>
 
-  <!-- ── HERO ── -->
   <section class="hero">
     <div class="hero-bg"></div>
     <img class="hero-img"
@@ -628,7 +628,6 @@
     </div>
   </section>
 
-  <!-- ── OUR STORY ── -->
   <section class="section">
     <div class="container">
       <div class="story-grid">
@@ -675,7 +674,6 @@
     </div>
   </section>
 
-  <!-- ── WHAT WE OFFER ── -->
   <section class="section offer-section">
     <div class="container">
       <div class="offer-grid">
@@ -716,7 +714,6 @@
     </div>
   </section>
 
-  <!-- ── APPOINTMENT STRIP ── -->
   <section class="appointment-strip">
     <div class="container">
       <div class="reveal">
@@ -731,7 +728,6 @@
     </div>
   </section>
 
-  <!-- ── TESTIMONIALS ── -->
   <section class="section">
     <div class="container">
       <div class="section-header reveal">
@@ -781,7 +777,6 @@
     </div>
   </section>
 
-  <!-- ── YOUTUBE VIDEO ── -->
   <section class="video-section">
     <div class="container">
       <div class="section-header reveal">
@@ -797,7 +792,6 @@
         </div>
       </div>
 
-      <!-- Channel link -->
       <div style="text-align:center;margin-top:40px" class="reveal">
         <a href="https://www.youtube.com/@Hairstudiodeluxe"
            target="_blank"
@@ -810,7 +804,6 @@
     </div>
   </section>
 
-  <!-- ── CTA ── -->
   <section class="cta-section">
     <div class="container">
       <div class="reveal">
@@ -833,7 +826,6 @@
     </div>
   </section>
 
-  <!-- ── FOOTER ── -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -895,29 +887,22 @@
   </footer>
 
   <script>
-  /* Navbar */
+  /* Navbar Scroll Event */
   const navbar = document.getElementById('navbar');
-  const logo = document.getElementById('siteLogo');
 
   window.addEventListener('scroll', () => {
     const isScrolled = window.scrollY > 60;
-
     navbar.classList.toggle('scrolled', isScrolled);
-
-    // Change logo image
-    logo.src = isScrolled 
-      ? "Assets/WhatsApp_Image_2025-11-05_at_23.18.16hgcf-removebg-preview-1.webp" 
-      : "Assets/Untitled design (2).png";
-
+    // Removed old JS .src swapping code to avoid layout jumps
   }, { passive: true });
 
-  /* Mobile menu */
+  /* Mobile menu toggle */
   const toggle = document.getElementById('navToggle');
   const menu   = document.getElementById('mobileMenu');
   toggle.addEventListener('click', () => menu.classList.toggle('open'));
   function closeMobile() { menu.classList.remove('open'); }
 
-  /* Scroll reveal */
+  /* Scroll reveal observer */
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) { 
@@ -928,15 +913,6 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  function closeMobile() {
-  const menu = document.getElementById('mobileMenu');
-  
-  // Option A: If you are toggling a class (Recommended)
-  menu.classList.remove('active'); 
-  
-  // Option B: If you are changing the style directly
-  // menu.style.display = 'none'; 
-}
-</script>
+  </script>
 </body>
 </html>

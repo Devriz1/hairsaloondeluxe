@@ -77,15 +77,39 @@
       justify-content: space-between;
       height: 100%;
     }
-    .nav-brand {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 400;
-      letter-spacing: .08em;
-      color: #fff;
-      transition: color .4s;
-      line-height: 1.1;
-    }
+ /* Container for the logo to reserve layout dimensions */
+.nav-brand {
+  display: inline-block;
+  position: relative;
+  height: 45px;
+  min-width: 160px; /* Adjust this width to match your wider logo layout footprint */
+}
+
+.logo {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity .3s ease, visibility .3s ease;
+}
+
+/* Initially hide the dark scroll logo */
+.logo-scrolled {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Toggle visibility cleanly on scroll without altering geometry dimensions */
+.navbar.scrolled .logo-default {
+  opacity: 0;
+  visibility: hidden;
+}
+.navbar.scrolled .logo-scrolled {
+  opacity: 1;
+  visibility: visible;
+}
     .nav-brand span {
       display: block;
       font-size: 10px;
@@ -908,17 +932,6 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-        .logo {
-  height: 43px;
-  width: auto;
-  object-fit: contain;
-  transition: opacity .3s ease;
-}
-
-/* When navbar scrolls */
-.navbar.scrolled .logo {
-  height: 45px;
-}
 
     /* ── Keyframes ── */
     @keyframes fadeUp {
@@ -967,8 +980,9 @@
   <!-- ── Navbar ── -->
   <header class="navbar" id="navbar">
     <div class="container">
-      <a href="/" class="nav-brand">
-  <img src="Assets\Untitled design (2).png" alt="Hair Studio De Luxe Logo" class="logo" id="siteLogo">
+     <a href="/" class="nav-brand">
+  <img src="Assets/Untitled design (2).png" alt="Hair Studio De Luxe Logo" class="logo logo-default">
+  <img src="Assets/WhatsApp_Image_2025-11-05_at_23.18.16hgcf-removebg-preview-1.webp" alt="Hair Studio De Luxe Logo" class="logo logo-scrolled">
 </a>
       <nav>
         <ul class="nav-links">
@@ -1463,21 +1477,13 @@
   </footer>
 
   <script>
-  /* Navbar */
-  const navbar = document.getElementById('navbar');
-  const logo = document.getElementById('siteLogo');
+  /* Updated Navbar Scroll Event */
+const navbar = document.getElementById('navbar');
 
-  window.addEventListener('scroll', () => {
-    const isScrolled = window.scrollY > 60;
-
-    navbar.classList.toggle('scrolled', isScrolled);
-
-    // Change logo image
-    logo.src = isScrolled 
-      ? "Assets/WhatsApp_Image_2025-11-05_at_23.18.16hgcf-removebg-preview-1.webp" 
-      : "Assets/Untitled design (2).png";
-
-  }, { passive: true });
+window.addEventListener('scroll', () => {
+  const isScrolled = window.scrollY > 60;
+  navbar.classList.toggle('scrolled', isScrolled);
+}, { passive: true });
 
   /* Mobile menu */
   const toggle = document.getElementById('navToggle');
