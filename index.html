@@ -75,12 +75,12 @@
       height: 100%;
     }
     
-    /* Dynamic Logo Container */
+    /* Dynamic Logo Container to prevent shifting */
     .nav-brand {
       display: inline-block;
       position: relative;
       height: 45px;
-      min-width: 160px; /* Reserves layout width to prevent links from shifting */
+      min-width: 160px;
     }
 
     .logo {
@@ -141,35 +141,92 @@
       display: inline-flex; align-items: center; gap: 6px;
     }
 
+    /* ── PREMIUM ANIMATED MOBILE HAMBURGER ── */
     .nav-toggle {
-      display: none; flex-direction: column; gap: 5px;
-      background: none; border: none; cursor: pointer; padding: 4px;
+      display: none; 
+      flex-direction: column; 
+      gap: 6px; 
+      background: none; 
+      border: none; 
+      cursor: pointer; 
+      padding: 4px;
+      position: relative;
+      z-index: 101; 
     }
     .nav-toggle span {
-      display: block; width: 24px; height: 2px;
-      background: #fff; border-radius: 2px;
-      transition: background .4s, transform .4s;
+      display: block; 
+      width: 24px; 
+      height: 2px;
+      background: #fff; 
+      border-radius: 2px; 
+      transition: transform .4s var(--ease), opacity .3s var(--ease), background .4s var(--ease);
+      transform-origin: center;
     }
     .navbar.scrolled .nav-toggle span { background: var(--fg); }
 
+    /* Morphing into "X" when open */
+    .nav-toggle.open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+      background: var(--fg) !important;
+    }
+    .nav-toggle.open span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    .nav-toggle.open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+      background: var(--fg) !important;
+    }
+
+    /* ── SMOOTH ACCORDION OVERLAY DROPDOWN ── */
     .mobile-menu {
-      display: none; position: fixed;
-      top: 76px; left: 0; width: 100%;
-      background: rgba(255,249,246,.97);
-      backdrop-filter: blur(16px);
-      padding: 32px var(--gutter) 40px;
-      z-index: 99; border-top: 1px solid var(--border);
-      flex-direction: column; gap: 24px;
+      display: flex; 
+      position: fixed;
+      top: 0; 
+      left: 0; 
+      width: 100%;
+      height: auto;
+      max-height: 0; 
+      opacity: 0;
+      visibility: hidden;
+      background: rgba(255,249,246,.98);
+      backdrop-filter: blur(20px);
+      padding: 0 var(--gutter); 
+      z-index: 99; 
+      border-bottom: 0 solid transparent;
+      flex-direction: column; 
+      gap: 20px;
+      overflow: hidden; 
+      transition: max-height .5s var(--ease), opacity .4s var(--ease), visibility .4s var(--ease), padding .5s var(--ease);
     }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      font-size: 14px; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .1em; color: var(--fg);
+
+    .mobile-menu.open {
+      max-height: 100vh; 
+      opacity: 1;
+      visibility: visible;
+      padding: 106px var(--gutter) 44px; 
+      border-bottom: 1px solid var(--border);
     }
-    .mobile-menu .nav-cta {
-      background: var(--primary); color: #fff;
-      width: fit-content; margin-top: 8px;
+
+    /* Stagger links transitions */
+    .mobile-menu a, .mobile-menu .nav-cta {
+      font-size: 15px; 
+      font-weight: 500;
+      text-transform: uppercase; 
+      letter-spacing: .12em; 
+      color: var(--fg);
+      transform: translateY(15px);
+      opacity: 0;
+      transition: transform .5s var(--ease), opacity .4s var(--ease);
     }
+
+    .mobile-menu.open a:nth-child(1) { transition-delay: .15s; transform: none; opacity: 1; }
+    .mobile-menu.open a:nth-child(2) { transition-delay: .20s; transform: none; opacity: 1; }
+    .mobile-menu.open a:nth-child(3) { transition-delay: .25s; transform: none; opacity: 1; }
+    .mobile-menu.open a:nth-child(4) { transition-delay: .30s; transform: none; opacity: 1; }
+    .mobile-menu.open a:nth-child(5) { transition-delay: .35s; transform: none; opacity: 1; }
+    .mobile-menu.open a:nth-child(6) { transition-delay: .40s; transform: none; opacity: 1; }
+    .mobile-menu.open .nav-cta       { transition-delay: .45s; transform: none; opacity: 1; width: fit-content; margin-top: 8px; }
 
     /* ── HERO ── */
     .hero {
@@ -567,7 +624,7 @@
   <header class="navbar" id="navbar">
     <div class="container">
       <a href="/" class="nav-brand">
-        <img src="Assets/Untitled design (2).png" alt="Hair Studio De Luxe Logo" class="logo logo-default" id="siteLogo">
+        <img src="Assets/Untitled design (2).png" alt="Hair Studio De Luxe Logo" class="logo logo-default">
         <img src="Assets/WhatsApp_Image_2025-11-05_at_23.18.16hgcf-removebg-preview-1.webp" alt="Hair Studio De Luxe Logo" class="logo logo-scrolled">
       </a>
       <nav>
@@ -893,14 +950,21 @@
   window.addEventListener('scroll', () => {
     const isScrolled = window.scrollY > 60;
     navbar.classList.toggle('scrolled', isScrolled);
-    // Removed old JS .src swapping code to avoid layout jumps
   }, { passive: true });
 
-  /* Mobile menu toggle */
+  /* Mobile menu toggle with animated burger tracking */
   const toggle = document.getElementById('navToggle');
   const menu   = document.getElementById('mobileMenu');
-  toggle.addEventListener('click', () => menu.classList.toggle('open'));
-  function closeMobile() { menu.classList.remove('open'); }
+  
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('open');
+    toggle.classList.toggle('open');
+  });
+  
+  function closeMobile() { 
+    menu.classList.remove('open'); 
+    toggle.classList.remove('open'); 
+  }
 
   /* Scroll reveal observer */
   const observer = new IntersectionObserver((entries) => {
